@@ -30,9 +30,17 @@ Prosty język programowania stworzony za pomocą Flex, Bison and C++.
 Kolejność wykonywania działań jest zaimplementowana przy użyciu odwrotnej notacji polskiej.
 
 Ustalenie wagi znaków operacji:
-
-    `if(ch == "/" || ch == "*") return 2;
-    else if(ch == "-" || ch == "+") return 1;`
+```c++
+    if(ch == "/" || ch == "*") return 2;
+    else if(ch == "-" || ch == "+") return 1;
+```
+Funkcja zwracająca stos znaków:
+```c++
+std::stack<std::string> infix2postfix(std::string infix);
+```
+Przykładowy stos:
+ - rówanie wejściowe: 3+4+5/2*(2-4)
+ - stos: 3 -> 4 -> + -> 5 -> 2 -> / -> + -> 2 -> 4 -> - -> *
 
 ## Funkcjonalność
  
