@@ -18,10 +18,10 @@ Simple programming language written with Flex, Bison and C++.
 - EQUATION
   - number
   - variable
-  - additon
-  - subtraction
-  - division
-  - multiplication
+  - additon - `EQUATION + EQUATION`
+  - subtraction - `EQUATION - EQUATION`
+  - division - `EQUATION / EQUATION`
+  - multiplication - `EQUATION * EQUATION`
 - CONDITION - `EQUATION SIGN EQUATION` where `SIGN` is one of `<`, `>`, `<=`, `>=`, `!=`, `==`
 - INSTRUCTION - single instriction
 
