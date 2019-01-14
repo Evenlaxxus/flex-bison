@@ -1,37 +1,54 @@
 # flex-bison
 
-Simple programming language written with Flex, Bison and C++.
+Prosty język programowania stworzony za pomocą Flex, Bison and C++.
 
-## Syntax
+## Składnia
 
-### Instructions
+### Instrukcje
 
-- Assignment - `variable_name = EQUATION ;`
-- Print expression 
+- Przypisanie wartości do zmiennej - `variable_name = EQUATION ;`
+- Wypisanie działania lub zmiennej 
   - `PRINT EQUATION ;`
   - `PRINT VARIABLE ;`
-- Condition statement - `IF CONDITION INSTRUCTION ;`
-- While loop - `WHIE VARIABLE ASSIGNMENT INSTRUCTION ;`
+- Instrukcja warunkowa - `IF CONDITION INSTRUCTION ;`
+- Pętla while - `WHIE VARIABLE ASSIGNMENT INSTRUCTION ;`
 
-### Symbols Explanation
+### Wyjaśnienie Symboli
 
 - EQUATION
-  - number
-  - variable
-  - additon - `EQUATION + EQUATION`
-  - subtraction - `EQUATION - EQUATION`
-  - division - `EQUATION / EQUATION`
-  - multiplication - `EQUATION * EQUATION`
-- CONDITION - `EQUATION SIGN EQUATION` where `SIGN` is one of `<`, `>`, `<=`, `>=`, `!=`, `==`
-- INSTRUCTION - single instriction
+  - liczba
+  - zmienna
+  - dodawanie - `EQUATION + EQUATION`
+  - odejmowanie - `EQUATION - EQUATION`
+  - dzielenie - `EQUATION / EQUATION`
+  - mnożenie - `EQUATION * EQUATION`
+- CONDITION - `EQUATION SIGN EQUATION` gdzie `SIGN` należy do {`<`, `>`, `<=`, `>=`, `!=`, `==`}
+- INSTRUCTION - pojedyncza instrukcja
 
-## Built With
+## Kolejność wykonywania działań
 
+Kolejność wykonywania działań jest zaimplementowana przy użyciu odwrotnej notacji polskiej.
+
+Ustalenie wagi znaków operacji:
+
+    `if(ch == "/" || ch == "*") return 2;
+    else if(ch == "-" || ch == "+") return 1;`
+
+## Funkcjonalność
+ 
+ - Rozwiązywanie prostych operacji matematycznych z poprawną kolejnością wykonywania działań
+ - Wypisywanie wyników działań
+ - Wykonywanie instrukcji na podstawie instrukcji warunkowej
+ - Wykonywanie instrukcji w pętli while
+ 
+## Kompilacja
+
+### Skompilowano za pomocą
 * MinGW
 * Bison
 * Flex
 
-### Build Commands
+### Użyte komendy konsolowe
 * flex skaner.l
 * bison -dy parser.y
 * g++ lex.yy.c y.tab.c -o `filename.exe`
