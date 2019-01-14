@@ -10,8 +10,8 @@ Simple programming language written with Flex, Bison and C++.
 - Print expression 
   - `PRINT EQUATION ;`
   - `PRINT VARIABLE ;`
-- Condition statement - `IF CONDITION EXPRESSION ;`
-- While loop - `WHIE VARIABLE ASSIGNMENT EXPRESSION ;`
+- Condition statement - `IF CONDITION INSTRUCTION ;`
+- While loop - `WHIE VARIABLE ASSIGNMENT INSTRUCTION ;`
 
 ### Symbols Explanation
 
@@ -22,14 +22,16 @@ Simple programming language written with Flex, Bison and C++.
   - subtraction
   - division
   - multiplication
-- EXPRESSION
-  - assignment
-  - print statement
-  - condition statement
 - CONDITION - `EQUATION SIGN EQUATION` where `SIGN` is one of `<`, `>`, `<=`, `>=`, `!=`, `==`
+- INSTRUCTION - single instriction
 
 ## Built With
 
 * MinGW
 * Bison
 * Flex
+
+### Build Commands
+* flex skaner.l
+* bison -dy parser.y
+* g++ lex.yy.c y.tab.c -o `filename.exe`
