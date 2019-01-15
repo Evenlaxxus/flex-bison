@@ -39,8 +39,9 @@ Funkcja zwracająca stos znaków:
 std::stack<std::string> infix2postfix(std::string infix);
 ```
 Przykładowy stos:
- - rówanie wejściowe: 3+4+5/2*(2-4)
- - stos: 3 -> 4 -> + -> 5 -> 2 -> / -> + -> 2 -> 4 -> - -> *
+ - Rówanie wejściowe: 3+4+5/2*(2-4)
+ - Odwrotna notacja polska: 3 4 + 5 2 / 2 4 - * +
+ - Stos: 3 -> 4 -> + -> 5 -> 2 -> / -> 2 -> 4 -> - -> * -> +
 
 ## Funkcjonalność
  
