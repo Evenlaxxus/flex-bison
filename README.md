@@ -1,6 +1,6 @@
 # flex-bison
 
-Prosty język programowania stworzony za pomocą Flex, Bison and C++.
+Prosty język programowania stworzony za pomocą Flex, Bison i C++.
 
 ## Składnia
 
