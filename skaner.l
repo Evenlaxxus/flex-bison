@@ -18,12 +18,12 @@ void yylval_to_vname(char* s);
 "IF" return IF;
 "WHILE" return WHILE;
 
-[A-Za-z]+ {
+[A-Za-z][A-Za-z0-9]* {
 	yylval.vName = new std::string(yytext);
 	return VAR;
 }
 
-[A-Za-z0-9\+\-\*\/\(\)]+ {
+[A-Za-z0-9\+\-\*\/\(\)\^\#\!\%\.]+ {
 	yylval.vName = new std::string(yytext);
 	return EQUATION;
 }

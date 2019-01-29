@@ -5,14 +5,15 @@
 	#include <cstring>
 	#include <map>
 	#include <stdlib.h>
-	#include<stack>
-	#include<vector>
-	#include<cstdlib>
+	#include <stack>
+	#include <vector>
+	#include <cstdlib>
+	#include <cmath>
 
 	void yyerror(std::string msg);
 	int yylex();
 
-	std::map<std::string, int> zmienne;
+	std::map<std::string, double> zmienne;
 
     enum OPERATIONS{WYPISZ, JEZELI, PETLA_WHILE, PRZYPISZ};
 
@@ -31,12 +32,17 @@
 	};
 
 
+    double square_root(double P, double eps);    
+
+    double square(double x, int n);
+
+    double factorial(double n);
 
 	int getWeight(std::string ch);
 
 	std::stack<std::string> infix2postfix(std::string infix);
 
-	int calculatePostfix(std::stack<std::string> postfix);
+	double calculatePostfix(std::stack<std::string> postfix);
 
 	void executeInstruction(std::vector<Instruction> &instr, int &i);
 
@@ -46,7 +52,7 @@
 %}
 
 %union {
-    int iValue;
+    double iValue;
 	std::string* vName;
     std::vector<Instruction>* instruction_vector;
 }
@@ -123,6 +129,38 @@ int yywrap()
 	return 0;
 }
 
+
+
+double square(double x, int n){
+    if(n==0){
+        return 1;
+    }
+    if(n%2!=0){
+        return x*square(x,n-1);
+    }else{
+        double a = square(x, n/2);
+        return a*a;
+    }
+}
+
+double square_root(double P){
+    double a = 1.0, b = P;
+    const double eps = 0.000001;
+
+    while(fabs(a-b)>=eps){
+        a = (a+b)/2.;   
+        b = P/a;
+    }
+    return a; 
+}
+
+double factorial(double n){
+    if(n<2){
+        return 1;
+    }
+    return n*factorial(n-1);
+}
+
 int checkCondition(std::string num1, std::string sign, std::string num2){
     int v1 = calculatePostfix(infix2postfix(num1));
     int v2 = calculatePostfix(infix2postfix(num2));
@@ -168,10 +206,12 @@ int checkCondition(std::string num1, std::string sign, std::string num2){
 }
 
 int getWeight(std::string ch) {
-    if(ch == "/" || ch == "*") return 2;
+    if(ch == "^" || ch == "#" || ch == "!" || ch == "%") return 3;
+    else if(ch == "/" || ch == "*") return 2;
     else if(ch == "-" || ch == "+") return 1;
     else return 0;
 }
+
 
 std::stack<std::string> infix2postfix(std::string infix) {
     std::vector<std::string> postfix;
@@ -199,7 +239,7 @@ std::stack<std::string> infix2postfix(std::string infix) {
         if (weight == 0) {
             int k=i;
             std::string tmp;
-            while(infix[k] != '+' && infix[k] != '-' && infix[k] != '*' && infix[k] != '/' && infix[k] != ')' && k < infix.size()){
+            while(infix[k] != '+' && infix[k] != '-' && infix[k] != '*' && infix[k] != '/' && infix[k] != '^' && infix[k] != '#' && infix[k] != '!' && infix[k] != '%' && infix[k] != ')' && k < infix.size()){
                 tmp += infix.substr(k,1);
                 k++;
             }
@@ -223,15 +263,16 @@ std::stack<std::string> infix2postfix(std::string infix) {
 
     for(int j=postfix.size()-1;j>=0;j--){
         s.push(postfix[j]);
+        // std::cout<<s.top()<<" ";
     }
-
+       // std::cout<<"\n";
     return s;
 }
 
-int calculatePostfix(std::stack<std::string> postfix){
-    std::vector<int> result;
-    int val1;
-    int val2;
+double calculatePostfix(std::stack<std::string> postfix){
+    std::vector<double> result;
+    double val1;
+    double val2;
     while (!postfix.empty()) {
 
         if(postfix.top() == "+"){
@@ -274,11 +315,45 @@ int calculatePostfix(std::stack<std::string> postfix){
             result.pop_back();
 
             result.push_back(val2/val1);
+        }else if(postfix.top() == "^"){
+            postfix.pop();
+
+            val1 = result.back();
+            result.pop_back();
+
+            val2 = result.back();
+            result.pop_back();
+
+            result.push_back(square(val2,val1));
+        }else if(postfix.top() == "#"){
+            postfix.pop();
+
+            val1 = result.back();
+            result.pop_back();
+
+            result.push_back(square_root(val1)); 
+        }else if(postfix.top() == "%"){
+            postfix.pop();
+
+            val1 = result.back();
+            result.pop_back();
+
+            val2 = result.back();
+            result.pop_back();
+
+            result.push_back((int)val2%(int)val1);
+        }else if(postfix.top() == "!"){
+            postfix.pop();
+            
+            val1 = result.back();
+            result.pop_back();
+
+            result.push_back(factorial(val1));
         }else if(zmienne.find(postfix.top())!=zmienne.end()){
             result.push_back(zmienne[postfix.top()]);
             postfix.pop();
         }else{
-            result.push_back(std::stoi(postfix.top()));
+            result.push_back(std::stod(postfix.top()));
             postfix.pop();
         }
     }
@@ -307,7 +382,7 @@ void executeInstruction(std::vector<Instruction> &instr, int &i){
             break;
         }
         case PRZYPISZ:{
-            int val = calculatePostfix(infix2postfix(instr[i].equation));
+            double val = calculatePostfix(infix2postfix(instr[i].equation));
             if(zmienne.find(instr[i].variable)!=zmienne.end()){
                 zmienne[instr[i].variable] = val;
                 std::cout<<"zmienna " << instr[i].variable << " istnieje, przypisano do niej wartosc " << zmienne[instr[i].variable] << "\n";
