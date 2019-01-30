@@ -22,6 +22,10 @@ Prosty język programowania stworzony za pomocą Flex, Bison i C++.
   - odejmowanie - `EQUATION - EQUATION`
   - dzielenie - `EQUATION / EQUATION`
   - mnożenie - `EQUATION * EQUATION`
+  - potęgowanie - `EQUATION ^ EQUATION`
+  - pierwiastek kwadratowy `EQUATION#`
+  - silnia `EQUATION!`
+  - reszta z dzielenia - `EQUATION % EQUATION`
 - CONDITION - `EQUATION SIGN EQUATION` gdzie `SIGN` należy do {`<`, `>`, `<=`, `>=`, `!=`, `==`}
 - INSTRUCTION - pojedyncza instrukcja
 
