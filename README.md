@@ -16,7 +16,7 @@ Prosty język programowania stworzony za pomocą Flex, Bison i C++.
 ### Wyjaśnienie Symboli
 
 - EQUATION
-  - liczba
+  - liczba - liczba zmiennoprzecinkowa lub całkowita
   - zmienna
   - dodawanie - `EQUATION + EQUATION`
   - odejmowanie - `EQUATION - EQUATION`
